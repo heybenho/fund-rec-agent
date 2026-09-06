@@ -1,0 +1,33 @@
+# Multi-Container Application, each service (postgres, opensearch) is a container
+services:
+  postgres:
+    image: postgres:16    # uses a base image of postgres instead of a dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./db:/db:ro
+
+  opensearch:
+    image: opensearchproject/opensearch:2.19.0
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    volumes:
+      - os_data:/usr/share/opensearch/data
+  
+# volume = folder on pc that docker can access to save data from containers and
+# other containers can access.
+# Normally, when a container is closed, all state/data is lost. This avoids that.
+volumes:
+  pg_data:
+  os_data:

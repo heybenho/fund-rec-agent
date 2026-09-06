@@ -1,0 +1,18 @@
+INSERT INTO subpurposes (name, path) VALUES
+    ('Graduate Fellowship', 'grad_support.grad_fellowship'),
+    ('Graduate Student Prize', 'grad_support.grad_prize'),
+    ('Graduate Student Research', 'grad_support.grad_research'),
+    ('Graduate Student Travel Award', 'grad_support.grad_travel'),
+    ('Undergraduate Scholarship', 'undergrad_support.undergrad_scholarship'),
+    ('Undergraduate Prize', 'undergrad_support.undergrad_prize'),
+    ('Undergraduate Research', 'undergrad_support.undergrad_research'),
+    ('Undergraduate Travel Award', 'undergrad_support.undergrad_travel'),
+    ('Chair', 'chair.chair'),
+    ('Administrative Chair', 'chair.admin_chair'),
+    ('Faculty Award', 'faculty_support.faculty_award'),
+    ('Faculty Research', 'faculty_support.faculty_research'),
+    ('Department Unrestricted', 'unrestricted.department_unrestricted'),
+    ('Dean Unrestricted', 'unrestricted.dean_unrestricted'),
+    ('Chancellor''s Unrestricted', 'unrestricted.chancellor_unrestricted'),
+    ('Basic Needs', 'student_services.basic_needs'),
+    ('Career Services', 'student_services.career_services');
