@@ -15,7 +15,7 @@ def create_search_pipeline(client):
                     "normalization": {"technique": "min_max"},
                     "combination": {
                         "technique": "arithmetic_mean",
-                        "parameters": {"weights": [0.4, 0.6]}
+                        "parameters": {"weights": [0.6, 0.4]}
                     }
                 }
             }

@@ -92,7 +92,7 @@ def main():
 
     print("Fund generation started.")
 
-    total_funds = 1000
+    total_funds = 5000
     for i in range(total_funds):
         unit, subpurpose = pick_combo(units, subpurposes)
         capacity_min = generate_capacity_min()

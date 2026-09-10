@@ -1,7 +1,53 @@
 from pipeline.index_funds import FUNDS_INDEX_NAME
 
 SEARCH_PIPELINE_NAME = "funds-hybrid-pipeline"
-CAPACITY_DECAY_SCALE_FACTOR = 0.75      # Applies gaussian decay on capacity_min, giving flexibility
+CAPACITY_DECAY_SCALE_FACTOR = 0.4      # Applies gaussian decay on capacity_min, giving flexibility
+
+SEARCH_FUNDS_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "search_funds",
+        "description": (
+            "Search the gift fund catalog for funds matching a donor's stated interest and gift capacity. Returns the best-matching funds."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "interest": {
+                    "type": "string",
+                    "description": "What the donor wants to support, in their own workds.",
+                },
+                "capacity": {
+                    "type": "number",
+                    "description": "The donor's gift amount in dollars.",
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Optional benefitting unit code to filter by, e.g. chancellor.engineering",
+                },
+                "purpose": {
+                    "type": "string",
+                    "description": "Optional purpose code to filter by, e.g. grad_support",
+                },
+            },
+            "required": ["interest", "capacity"],
+        },
+    },
+}
+
+def format_hits_for_llm(response, top_n=5):
+    hits = response["hits"]["hits"][:top_n]
+    return [
+        {
+            "fund_name": hit["_source"]["fund_name"],
+            "unit_name": hit["_source"]["unit_name"],
+            "subpurpose_name": hit["_source"]["subpurpose_name"],
+            "capacity_min": hit["_source"]["capacity_min"],
+            "fund_terms": hit["_source"]["fund_terms"][:300],
+            "score": hit["_score"],
+        }
+        for hit in hits
+    ]
 
 def embed_query(model, text):
     return model.encode(text).tolist()
