@@ -1,29 +1,39 @@
 "use client";
 
 import {useState} from "react";
-import DonorForm from "./components/DonorForm";
-import {DonorProfile, FundRecommendation} from "./types";
+import ChatWindow from "./components/ChatWindow";
+import {ChatMessage, FundRecommendation} from "./types";
 import RecommendationList from "./components/RecommendationList";
 
 export default function Home() {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [recommendations, setRecommendations] = useState<FundRecommendation[]>([]);
 
-  async function handleSubmit(profile: DonorProfile) {
-    const response = await fetch("/api/recommend", {
+  async function handleSend(content: string) {
+    const nextMessages: ChatMessage[] = [...messages, {role: "user", content}];
+    setMessages(nextMessages);
+
+    const response = await fetch("/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(profile),
+      body: JSON.stringify({messages: nextMessages}),
     });
 
-    const data: FundRecommendation[] = await response.json();
-    setRecommendations(data);
+    if (!response.ok) {
+      setMessages([...nextMessages, {role: "assistant", content: "Sorry, something went wrong reaching the agent."}]);
+      return;
+    }
+
+    const data = await response.json();
+    setMessages([...nextMessages, {role: "assistant", content: data.reply}]);
+    setRecommendations(data.recommendations);
   }
 
   return (
-    <main>
-      <h1>Fund Recommendation Agent</h1>
-      <DonorForm onSubmit = {handleSubmit} />
-      <RecommendationList recommendations={recommendations}/>
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-10">
+      <h1 className="text-2xl font-semibold text-neutral-900">Fund Recommendation Agent</h1>
+      <ChatWindow messages={messages} onSend={handleSend} />
+      <RecommendationList recommendations={recommendations} />
     </main>
   );
 }

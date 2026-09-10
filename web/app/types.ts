@@ -1,8 +1,6 @@
-export interface DonorProfile {
-    interest: string;
-    capacity: number;
-    unit?: string;
-    purpose?: string;
+export interface ChatMessage {
+    role: "user" | "assistant";
+    content: string;
 }
 
 export interface FundRecommendation {
@@ -11,6 +9,9 @@ export interface FundRecommendation {
     subpurpose_name: string;
     capacity_min: number;
     score: number;
-    rationale: string;
 }
 
+export interface ChatResponse {
+    reply: string;
+    recommendations: FundRecommendation[];
+}

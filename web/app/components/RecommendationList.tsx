@@ -10,19 +10,27 @@ export default function RecommendationList({recommendations}: RecommendationList
     }
 
     return (
-        <ul>
-            {recommendations.map((rec, index) => (
-                <li key = {index}>
-                    <h2>{rec.fund_name}</h2>
-                    <p>
-                        <strong>Unit:</strong> {rec.unit_name} | {" "}
-                        <strong>Subpurpose:</strong> {rec.subpurpose_name} | {" "}
-                        <strong>Minimum gift:</strong> ${rec.capacity_min.toLocaleString()}
-                    </p>
-                    <p>{rec.rationale}</p>
-                    <p><em>Match score: {rec.score.toFixed(4)}</em></p>
-                </li>
-            ))}
-        </ul>
+        <div>
+            <h2 className="mb-3 text-lg font-semibold text-neutral-900">Recommended funds</h2>
+            <ul className="flex flex-col gap-4">
+                {recommendations.map((rec, index) => (
+                    <li
+                        key={index}
+                        className="flex flex-col gap-2 rounded-xl border border-neutral-200 bg-white p-4 shadow-sm"
+                    >
+                        <h3 className="font-semibold text-neutral-900">{rec.fund_name}</h3>
+                        <p className="text-sm text-neutral-600">
+                            {rec.unit_name} &middot; {rec.subpurpose_name}
+                        </p>
+                        <div className="mt-1 flex items-center justify-between text-sm">
+                            <span className="rounded-full bg-neutral-100 px-2 py-1 text-neutral-700">
+                                Min gift: ${rec.capacity_min.toLocaleString()}
+                            </span>
+                            <span className="text-neutral-400">Score: {rec.score.toFixed(2)}</span>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
