@@ -9,6 +9,7 @@ export interface FundRecommendation {
     subpurpose_name: string;
     capacity_min: number;
     score: number;
+    fund_terms: string;
 }
 
 export interface ChatResponse {

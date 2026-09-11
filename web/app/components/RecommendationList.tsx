@@ -22,6 +22,7 @@ export default function RecommendationList({recommendations}: RecommendationList
                         <p className="text-sm text-neutral-600">
                             {rec.unit_name} &middot; {rec.subpurpose_name}
                         </p>
+                        <p className="text-sm text-neutral-700">{rec.fund_terms}</p>
                         <div className="mt-1 flex items-center justify-between text-sm">
                             <span className="rounded-full bg-neutral-100 px-2 py-1 text-neutral-700">
                                 Min gift: ${rec.capacity_min.toLocaleString()}

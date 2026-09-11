@@ -95,7 +95,25 @@ def build_hybrid_query(interest_text, interest_embedding, capacity, unit_filter=
     if filters:
         knn_params["filter"] = {"bool": {"filter": filters}}
 
-    knn_branch = {"knn": {"fund_terms_embedding": knn_params}}
+    knn_branch = {
+        "function_score": {
+            "query": {"knn": {"fund_terms_embedding": knn_params}},
+            "functions": [
+                {
+                    "gauss": {
+                        "capacity_min": {
+                            "origin": capacity,
+                            "scale": decay_scale,
+                            "decay": 0.5,
+                        }
+                    }
+                }
+            ],
+            "score_mode": "multiply",
+            "boost_mode": "multiply"
+        }
+    }
+
 
 
     return {

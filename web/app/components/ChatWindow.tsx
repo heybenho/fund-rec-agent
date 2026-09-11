@@ -21,11 +21,6 @@ export default function ChatWindow({messages, onSend}: ChatWindowProps) {
     return (
         <div className="flex flex-col rounded-xl border border-neutral-200 bg-white shadow-sm">
             <ul className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto p-4">
-                {messages.length === 0 && (
-                    <li className="text-sm text-neutral-400">
-                        Please tell me what you would like to support and how much you would like to give.
-                    </li>
-                )}
                 {messages.map((message, index) => (
                     <li
                         key={index}

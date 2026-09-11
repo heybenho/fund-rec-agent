@@ -42,6 +42,7 @@ class FundRecommendation(BaseModel):
     subpurpose_name: str
     capacity_min: int
     score: float
+    fund_terms: str
 
 class ChatResponse(BaseModel):
     reply: str
