@@ -7,4 +7,4 @@ This is a RAG-based agent that recommends gift funds to donors based on their in
 This is a project to get hands-on experience with a specific tech stack: Python, TypeScript, Next.js, Node.js, PostgreSQL, OpenSearch, and Docker.
 
 ## Sample Output
-![Fund Recommendation Agent screenshot](docs/screenshot.png)
+![Fund Recommendation Agent screenshot](docs/sample_output.png)
